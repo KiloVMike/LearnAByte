@@ -23,7 +23,7 @@ const createOrder = async (req, res) => {
       coursePricing,
     } = req.body;
 
-    const priceAsString = parseFloat(coursePricing).toFixed(2); // Ensure string format
+    const priceAsString = parseFloat(coursePricing).toFixed(2); 
 
     const create_payment_json = {
       intent: "sale",

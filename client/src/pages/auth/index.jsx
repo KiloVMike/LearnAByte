@@ -12,6 +12,8 @@ import { AuthContext } from "@/context/auth-context";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
@@ -45,10 +47,32 @@ function AuthPage() {
     );
   }
 
-  console.log(signInFormData);
+function handleLoginWithToast(e) {
+  e.preventDefault();
+  if (!checkIfSignInFormIsValid()) {
+    toast.error("Please fill all required fields for Sign In.");
+    return;
+  }
+
+  toast.success("Login submitted!"); // <-- Add this to test visibility
+  handleLoginUser(e);
+}
+
+function handleRegisterWithToast(e) {
+  e.preventDefault(); // Prevent form reload
+  if (!checkIfSignUpFormIsValid()) {
+    toast.error("Please fill all required fields for Sign Up.");
+    return;
+  }
+
+  toast.success("Sign Up submitted!");
+  handleRegisterUser(e); // Pass the event like your original expects
+}
 
   return (
+    
     <div className="flex flex-col min-h-screen">
+      <ToastContainer position="top-center" autoClose={3000} />
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
         <Link to={"/"} className="flex items-center justify-center">
           <GraduationCap className="h-8 w-8 mr-4" />
@@ -81,7 +105,7 @@ function AuthPage() {
                   formData={signInFormData}
                   setFormData={setSignInFormData}
                   isButtonDisabled={!checkIfSignInFormIsValid()}
-                  handleSubmit={handleLoginUser}
+                  handleSubmit={handleLoginWithToast}
                 />
               </CardContent>
             </Card>
@@ -101,7 +125,7 @@ function AuthPage() {
                   formData={signUpFormData}
                   setFormData={setSignUpFormData}
                   isButtonDisabled={!checkIfSignUpFormIsValid()}
-                  handleSubmit={handleRegisterUser}
+                  handleSubmit={handleRegisterWithToast}
                 />
               </CardContent>
             </Card>

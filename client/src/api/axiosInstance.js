@@ -6,10 +6,18 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = JSON.parse(sessionStorage.getItem("accessToken")) || "";
+    try {
+      const rawToken = sessionStorage.getItem("accessToken");
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      // Only parse if it's a valid JSON string (like a quoted string)
+      const accessToken =
+        rawToken && rawToken !== "undefined" ? JSON.parse(rawToken) : "";
+
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+    } catch (err) {
+      console.warn("Token parse failed", err);
     }
 
     return config;
