@@ -49,39 +49,47 @@ function InstructorDashboardpage() {
     sessionStorage.clear();
   }
 
-  console.log(instructorCoursesList, "instructorCoursesList");
-
   return (
-    <div className="flex h-full min-h-screen bg-gray-100">
-      <aside className="w-64 bg-white shadow-md hidden md:block">
-        <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Instructor View</h2>
-          <nav>
+    <div className="flex min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white/10 backdrop-blur-md border-r border-white/10 hidden md:block shadow-lg">
+        <div className="p-6">
+          <h2 className="text-xl font-bold mb-6 text-white">Instructor Panel</h2>
+          <nav className="space-y-2">
             {menuItems.map((menuItem) => (
               <Button
-                className="w-full justify-start mb-2"
                 key={menuItem.value}
-                variant={activeTab === menuItem.value ? "secondary" : "ghost"}
+                variant="ghost"
                 onClick={
                   menuItem.value === "logout"
                     ? handleLogout
                     : () => setActiveTab(menuItem.value)
                 }
+                className={`w-full flex items-center justify-start gap-3 px-4 py-3 rounded-md transition-all duration-200
+                  ${
+                    activeTab === menuItem.value
+                      ? "bg-indigo-600 text-white shadow-md hover:bg-indigo-700"
+                      : "text-gray-300 hover:bg-white/10 hover:text-white"
+                  }`}
               >
-                <menuItem.icon className="mr-2 h-4 w-4" />
-                {menuItem.label}
+                <menuItem.icon className="h-5 w-5" />
+                <span className="text-sm font-medium">{menuItem.label}</span>
               </Button>
             ))}
           </nav>
         </div>
       </aside>
-      <main className="flex-1 p-8 overflow-y-auto">
+
+      {/* Main Content */}
+      <main className="flex-1 p-6 lg:p-10 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+          <h1 className="text-3xl font-bold mb-8">
+            {menuItems.find((item) => item.value === activeTab)?.label}
+          </h1>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             {menuItems.map((menuItem) => (
-              <TabsContent value={menuItem.value}>
-                {menuItem.component !== null ? menuItem.component : null}
+              <TabsContent key={menuItem.value} value={menuItem.value}>
+                {menuItem.component}
               </TabsContent>
             ))}
           </Tabs>

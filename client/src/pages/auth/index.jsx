@@ -6,14 +6,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { signInFormControls, signUpFormControls } from "@/config";
 import { AuthContext } from "@/context/auth-context";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import pic from '../../assets/502-5029730_e-learning-illustration-png-transparent-png.png'
+
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
@@ -47,58 +54,82 @@ function AuthPage() {
     );
   }
 
-function handleLoginWithToast(e) {
-  e.preventDefault();
-  if (!checkIfSignInFormIsValid()) {
-    toast.error("Please fill all required fields for Sign In.");
-    return;
+  function handleLoginWithToast(e) {
+    e.preventDefault();
+    if (!checkIfSignInFormIsValid()) {
+      toast.error("Please fill all required fields for Sign In.");
+      return;
+    }
+    handleLoginUser(e);
   }
 
-  toast.success("Login submitted!"); // <-- Add this to test visibility
-  handleLoginUser(e);
-}
-
-function handleRegisterWithToast(e) {
-  e.preventDefault(); // Prevent form reload
-  if (!checkIfSignUpFormIsValid()) {
-    toast.error("Please fill all required fields for Sign Up.");
-    return;
+  function handleRegisterWithToast(e) {
+    e.preventDefault();
+    if (!checkIfSignUpFormIsValid()) {
+      toast.error("Please fill all required fields for Sign Up.");
+      return;
+    }
+    handleRegisterUser(e);
   }
-
-  toast.success("Sign Up submitted!");
-  handleRegisterUser(e); // Pass the event like your original expects
-}
 
   return (
-    
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex flex-col text-white">
       <ToastContainer position="top-center" autoClose={3000} />
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-        <Link to={"/"} className="flex items-center justify-center">
-          <GraduationCap className="h-8 w-8 mr-4" />
-          <span className="font-extrabold text-xl">L LEARN</span>
+      
+      {/* Header */}
+      <header className="px-4 lg:px-6 h-16 flex items-center justify-center border-b border-white/10 shadow-sm">
+        <Link to={"/"} className="flex items-center gap-3">
+          <GraduationCap className="h-8 w-8 text-indigo-400" />
+          <span className="font-extrabold text-2xl tracking-wide">L LEARN</span>
         </Link>
       </header>
-      <div className="flex items-center justify-center min-h-screen bg-background">
+
+      {/* Auth Content */}
+      <div className="flex-1 flex flex-col lg:flex-row items-center justify-center px-4 py-12 gap-10 animate-fade-in">
+        {/* Left panel */}
+        <div className="hidden lg:flex flex-col items-start justify-center max-w-md space-y-4">
+          <h2 className="text-4xl font-bold">Unlock your potential 🚀</h2>
+          <p className="text-gray-300 text-lg">
+            Learn from the best instructors and track your growth in one place.
+          </p>
+          <img
+            src={pic}
+            alt="Illustration of a person learning"
+            className=" lg:block w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
+
+        {/* Auth form */}
         <Tabs
           value={activeTab}
           defaultValue="signin"
           onValueChange={handleTabChange}
           className="w-full max-w-md"
         >
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Sign In</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-white/10 backdrop-blur-md">
+            <TabsTrigger
+              value="signin"
+              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
+            >
+              Sign In
+            </TabsTrigger>
+            <TabsTrigger
+              value="signup"
+              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
+            >
+              Sign Up
+            </TabsTrigger>
           </TabsList>
+
           <TabsContent value="signin">
-            <Card className="p-6 space-y-4">
+            <Card className="p-6 bg-white/5 backdrop-blur-md border border-white/10 text-white shadow-md rounded-xl">
               <CardHeader>
-                <CardTitle>Sign in to your account</CardTitle>
-                <CardDescription>
-                  Enter your email and password to access your account
+                <CardTitle className="text-white">Welcome back!</CardTitle>
+                <CardDescription className="text-sm text-gray-300">
+                  Enter your credentials to access your account.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent>
                 <CommonForm
                   formControls={signInFormControls}
                   buttonText={"Sign In"}
@@ -110,15 +141,16 @@ function handleRegisterWithToast(e) {
               </CardContent>
             </Card>
           </TabsContent>
+
           <TabsContent value="signup">
-            <Card className="p-6 space-y-4">
+            <Card className="p-6 bg-white/5 backdrop-blur-md border border-white/10 text-white shadow-md rounded-xl">
               <CardHeader>
-                <CardTitle>Create a new account</CardTitle>
-                <CardDescription>
-                  Enter your details to get started
+                <CardTitle className="text-white">Join the community!</CardTitle>
+                <CardDescription className="text-sm text-gray-300">
+                  Sign up to start learning and growing.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent>
                 <CommonForm
                   formControls={signUpFormControls}
                   buttonText={"Sign Up"}

@@ -32,37 +32,19 @@ function AddNewCoursePage() {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log(params);
-
   function isEmpty(value) {
-    if (Array.isArray(value)) {
-      return value.length === 0;
-    }
-
-    return value === "" || value === null || value === undefined;
+    return Array.isArray(value) ? value.length === 0 : value === "" || value === null || value === undefined;
   }
 
   function validateFormData() {
     for (const key in courseLandingFormData) {
-      if (isEmpty(courseLandingFormData[key])) {
-        return false;
-      }
+      if (isEmpty(courseLandingFormData[key])) return false;
     }
 
     let hasFreePreview = false;
-
     for (const item of courseCurriculumFormData) {
-      if (
-        isEmpty(item.title) ||
-        isEmpty(item.videoUrl) ||
-        isEmpty(item.public_id)
-      ) {
-        return false;
-      }
-
-      if (item.freePreview) {
-        hasFreePreview = true; //found at least one free preview
-      }
+      if (isEmpty(item.title) || isEmpty(item.videoUrl) || isEmpty(item.public_id)) return false;
+      if (item.freePreview) hasFreePreview = true;
     }
 
     return hasFreePreview;
@@ -79,13 +61,9 @@ function AddNewCoursePage() {
       isPublised: true,
     };
 
-    const response =
-      currentEditedCourseId !== null
-        ? await updateCourseByIdService(
-            currentEditedCourseId,
-            courseFinalFormData
-          )
-        : await addNewCourseService(courseFinalFormData);
+    const response = currentEditedCourseId
+      ? await updateCourseByIdService(currentEditedCourseId, courseFinalFormData)
+      : await addNewCourseService(courseFinalFormData);
 
     if (response?.success) {
       setCourseLandingFormData(courseLandingInitialFormData);
@@ -93,30 +71,19 @@ function AddNewCoursePage() {
       navigate(-1);
       setCurrentEditedCourseId(null);
     }
-
-    console.log(courseFinalFormData, "courseFinalFormData");
   }
 
   async function fetchCurrentCourseDetails() {
-    const response = await fetchInstructorCourseDetailsService(
-      currentEditedCourseId
-    );
+    const response = await fetchInstructorCourseDetailsService(currentEditedCourseId);
 
     if (response?.success) {
-      const setCourseFormData = Object.keys(
-        courseLandingInitialFormData
-      ).reduce((acc, key) => {
+      const setCourseFormData = Object.keys(courseLandingInitialFormData).reduce((acc, key) => {
         acc[key] = response?.data[key] || courseLandingInitialFormData[key];
-
         return acc;
       }, {});
-
-      console.log(setCourseFormData, response?.data, "setCourseFormData");
       setCourseLandingFormData(setCourseFormData);
       setCourseCurriculumFormData(response?.data?.curriculum);
     }
-
-    console.log(response, "response");
   }
 
   useEffect(() => {
@@ -127,44 +94,50 @@ function AddNewCoursePage() {
     if (params?.courseId) setCurrentEditedCourseId(params?.courseId);
   }, [params?.courseId]);
 
-  console.log(params, currentEditedCourseId, "params");
-
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h1 className="text-3xl font-extrabold mb-5">Create a new course</h1>
-        <Button
-          disabled={!validateFormData()}
-          className="text-sm tracking-wider font-bold px-8"
-          onClick={handleCreateCourse}
-        >
-          SUBMIT
-        </Button>
-      </div>
-      <Card>
-        <CardContent>
-          <div className="container mx-auto p-4">
-            <Tabs defaultValue="curriculum" className="space-y-4">
-              <TabsList>
-                <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
-                <TabsTrigger value="course-landing-page">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-4 text-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight">Create a New Course</h1>
+          <Button
+            disabled={!validateFormData()}
+            className="text-sm font-semibold px-6 py-2 shadow-md bg-indigo-600 hover:bg-indigo-700 transition"
+            onClick={handleCreateCourse}
+          >
+            SUBMIT
+          </Button>
+        </div>
+
+        <Card className="bg-white/5 backdrop-blur-md border border-white/10 shadow-lg">
+          <CardContent className="p-6">
+            <Tabs defaultValue="curriculum" className="space-y-6">
+              <TabsList className="flex space-x-4 bg-white/10 rounded-md p-1 mb-6">
+                <TabsTrigger value="curriculum" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white px-4 py-2 rounded-md">
+                  Curriculum
+                </TabsTrigger>
+                <TabsTrigger value="course-landing-page" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white px-4 py-2 rounded-md">
                   Course Landing Page
                 </TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+                <TabsTrigger value="settings" className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white px-4 py-2 rounded-md">
+                  Settings
+                </TabsTrigger>
               </TabsList>
+
               <TabsContent value="curriculum">
                 <CourseCurriculum />
               </TabsContent>
+
               <TabsContent value="course-landing-page">
                 <CourseLanding />
               </TabsContent>
+
               <TabsContent value="settings">
                 <CourseSettings />
               </TabsContent>
             </Tabs>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
