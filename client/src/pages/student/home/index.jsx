@@ -1,5 +1,5 @@
 import { courseCategories } from "@/config";
-import banner from "../../../../public/banner-img.png";
+import banner from "../../../assets/LMS.png";
 import { Button } from "@/components/ui/button";
 import { useContext, useEffect } from "react";
 import { StudentContext } from "@/context/student-context";
@@ -46,24 +46,24 @@ return (
   <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-sans">
 
     {/* Hero Section */}
-    <section className="relative px-6 lg:px-20 py-24 flex flex-col-reverse lg:flex-row items-center justify-between gap-16">
-      <div className="lg:w-1/2 space-y-8 text-center lg:text-left animate-fade-in-up">
-        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+    <section className="relative px-6 lg:px-16 py-24 flex flex-col-reverse lg:flex-row items-center justify-between gap-16">
+      <div className="lg:w space-y-8 text-center lg:text-left animate-fade-in-up">
+        <h1 className="text-7xl md:text-6xl font-extrabold leading-tight">
           Transform the Way You <span className="text-indigo-400">Learn</span>
         </h1>
-        <p className="text-lg text-gray-300 max-w-lg mx-auto lg:mx-0">
+        <p className="text-3xl text-gray-300 max-w-lg mx-auto lg:mx-0">
           Handpicked premium courses taught by world-class instructors. Unlock your potential today.
         </p>
         <Button
           onClick={() => navigate("/courses")}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition duration-300 hover:shadow-indigo-400/50"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-12 py-5 rounded-full shadow-lg transition duration-300 hover:shadow-indigo-400/50 text-2xl"
         >
           🚀 Browse Courses
         </Button>
       </div>
 
       <div className="lg:w-1/2 relative">
-        <div className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-xl hover:scale-105 transition duration-500 ease-in-out">
+        <div className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-xl  transition duration-500 ease-in-out">
           <img
             src={banner}
             alt="Hero"
@@ -117,7 +117,7 @@ return (
                   {courseItem?.title}
                 </h3>
                 <p className="text-sm text-gray-400">{courseItem?.instructorName}</p>
-                <p className="text-indigo-400 font-semibold mt-2">${courseItem?.pricing}</p>
+                <p className="text-indigo-400 font-semibold mt-2">₹ {courseItem?.pricing}</p>
               </div>
             </div>
           ))}

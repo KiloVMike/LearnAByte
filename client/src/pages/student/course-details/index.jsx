@@ -221,7 +221,7 @@ function StudentViewCourseDetailsPage() {
           />
         </div>
         <div className="text-3xl font-extrabold text-indigo-400 mb-4">
-          ${studentViewCourseDetails?.pricing}
+          ₹ {studentViewCourseDetails?.pricing}
         </div>
         <Button
           onClick={handleCreatePayment}

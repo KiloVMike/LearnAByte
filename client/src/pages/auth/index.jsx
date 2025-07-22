@@ -19,7 +19,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import pic from '../../assets/502-5029730_e-learning-illustration-png-transparent-png.png'
+import pic from '../../assets/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector-removebg-preview.png'
 
 
 function AuthPage() {
@@ -77,17 +77,17 @@ function AuthPage() {
       <ToastContainer position="top-center" autoClose={3000} />
       
       {/* Header */}
-      <header className="px-4 lg:px-6 h-16 flex items-center justify-center border-b border-white/10 shadow-sm">
+      <header className="px-4 lg:px-6 h-28 flex items-center justify-start border-b border-white/10 shadow-sm">
         <Link to={"/"} className="flex items-center gap-3">
           <GraduationCap className="h-8 w-8 text-indigo-400" />
-          <span className="font-extrabold text-2xl tracking-wide">L LEARN</span>
+          <span className="font-extrabold text-4xl tracking-wide">L LEARN</span>
         </Link>
       </header>
 
       {/* Auth Content */}
       <div className="flex-1 flex flex-col lg:flex-row items-center justify-center px-4 py-12 gap-10 animate-fade-in">
         {/* Left panel */}
-        <div className="hidden lg:flex flex-col items-start justify-center max-w-md space-y-4">
+        <div className="hidden lg:flex flex-col items-start justify-center max-w-2xl space-y-4">
           <h2 className="text-4xl font-bold">Unlock your potential 🚀</h2>
           <p className="text-gray-300 text-lg">
             Learn from the best instructors and track your growth in one place.
@@ -95,7 +95,7 @@ function AuthPage() {
           <img
             src={pic}
             alt="Illustration of a person learning"
-            className=" lg:block w-full h-auto rounded-lg shadow-lg"
+            className=" lg:block w-full h-full rounded-lg "
           />
         </div>
 

@@ -183,7 +183,7 @@ function StudentViewCoursesPage() {
                           courseItem?.curriculum?.length <= 1 ? "Lecture" : "Lectures"
                         } • ${courseItem?.level?.toUpperCase()} Level`}
                       </p>
-                      <p className="text-lg font-bold text-indigo-400 mt-3">${courseItem?.pricing}</p>
+                      <p className="text-lg font-bold text-indigo-400 mt-3">₹ {courseItem?.pricing}</p>
                     </div>
                   </CardContent>
                 </Card>
