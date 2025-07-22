@@ -96,7 +96,20 @@ function AddNewCoursePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-4 text-white">
+           {/* Back to Dashboard button */}
+    <div className="flex items-center justify-between mb-6">
+  <Button
+    onClick={() => navigate("/instructor")}
+    variant="ghost"
+    className="group flex items-center gap-2 text-white bg-indigo-600 text-sm px-4 py-2 rounded-md transition-all duration-200 hover:bg-white/10 hover:pl-5"
+  >
+    <span className="text-lg transition-transform duration-200 group-hover:-translate-x-1">←</span>
+    <span className="font-medium tracking-wide">Back to Dashboard</span>
+  </Button>
+</div>
       <div className="max-w-6xl mx-auto">
+    
+
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-extrabold tracking-tight">Create a New Course</h1>
           <Button

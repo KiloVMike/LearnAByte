@@ -8,18 +8,20 @@ function CourseLanding() {
   const { courseLandingFormData, setCourseLandingFormData } =
     useContext(InstructorContext);
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Course Landing Page</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <FormControls
-          formControls={courseLandingPageFormControls}
-          formData={courseLandingFormData}
-          setFormData={setCourseLandingFormData}
-        />
-      </CardContent>
-    </Card>
+   <Card className="bg-white/5 border border-white/10 backdrop-blur-md shadow-md text-white">
+  <CardHeader>
+    <CardTitle className="text-xl font-semibold text-indigo-300">
+      Course Landing Page
+    </CardTitle>
+  </CardHeader>
+  <CardContent className="space-y-6">
+    <FormControls
+      formControls={courseLandingPageFormControls}
+      formData={courseLandingFormData}
+      setFormData={setCourseLandingFormData}
+    />
+  </CardContent>
+</Card>
   );
 }
 

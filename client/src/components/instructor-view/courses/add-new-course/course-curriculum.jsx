@@ -187,103 +187,122 @@ function CourseCurriculum() {
   }
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row justify-between">
-        <CardTitle>Create Course Curriculum</CardTitle>
-        <div>
-          <Input
-            type="file"
-            ref={bulkUploadInputRef}
-            accept="video/*"
-            multiple
-            className="hidden"
-            id="bulk-media-upload"
-            onChange={handleMediaBulkUpload}
-          />
-          <Button
-            as="label"
-            htmlFor="bulk-media-upload"
-            variant="outline"
-            className="cursor-pointer"
-            onClick={handleOpenBulkUploadDialog}
-          >
-            <Upload className="w-4 h-5 mr-2" />
-            Bulk Upload
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <Button
-          disabled={!isCourseCurriculumFormDataValid() || mediaUploadProgress}
-          onClick={handleNewLecture}
+<Card className="bg-white/5 border border-white/10 backdrop-blur-md shadow-md text-white">
+  <CardHeader className="flex flex-row justify-between items-center">
+    <CardTitle className="text-xl font-semibold">
+      Create Course Curriculum
+    </CardTitle>
+    <div>
+      <Input
+        type="file"
+        ref={bulkUploadInputRef}
+        accept="video/*"
+        multiple
+        className="hidden"
+        id="bulk-media-upload"
+        onChange={handleMediaBulkUpload}
+      />
+      <Button
+        as="label"
+        htmlFor="bulk-media-upload"
+        variant="outline"
+        className="cursor-pointer border-black text-black hover:bg-white/10 hover:border-white/40 transition"
+        onClick={handleOpenBulkUploadDialog}
+      >
+        <Upload className="w-4 h-5 mr-2" />
+        Bulk Upload
+      </Button>
+    </div>
+  </CardHeader>
+
+  <CardContent>
+    <Button
+      disabled={!isCourseCurriculumFormDataValid() || mediaUploadProgress}
+      onClick={handleNewLecture}
+      className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2 mb-6"
+    >
+      Add Lecture
+    </Button>
+
+    {mediaUploadProgress && (
+      <MediaProgressbar
+        isMediaUploading={mediaUploadProgress}
+        progress={mediaUploadProgressPercentage}
+      />
+    )}
+
+    <div className="space-y-6">
+      {courseCurriculumFormData.map((curriculumItem, index) => (
+        <div
+          key={index}
+          className="border border-white/10 p-5 rounded-md bg-white/5 backdrop-blur-sm"
         >
-          Add Lecture
-        </Button>
-        {mediaUploadProgress ? (
-          <MediaProgressbar
-            isMediaUploading={mediaUploadProgress}
-            progress={mediaUploadProgressPercentage}
-          />
-        ) : null}
-        <div className="mt-4 space-y-4">
-          {courseCurriculumFormData.map((curriculumItem, index) => (
-            <div className="border p-5 rounded-md">
-              <div className="flex gap-5 items-center">
-                <h3 className="font-semibold">Lecture {index + 1}</h3>
-                <Input
-                  name={`title-${index + 1}`}
-                  placeholder="Enter lecture title"
-                  className="max-w-96"
-                  onChange={(event) => handleCourseTitleChange(event, index)}
-                  value={courseCurriculumFormData[index]?.title}
-                />
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    onCheckedChange={(value) =>
-                      handleFreePreviewChange(value, index)
-                    }
-                    checked={courseCurriculumFormData[index]?.freePreview}
-                    id={`freePreview-${index + 1}`}
-                  />
-                  <Label htmlFor={`freePreview-${index + 1}`}>
-                    Free Preview
-                  </Label>
-                </div>
-              </div>
-              <div className="mt-6">
-                {courseCurriculumFormData[index]?.videoUrl ? (
-                  <div className="flex gap-3">
-                    <VideoPlayer
-                      url={courseCurriculumFormData[index]?.videoUrl}
-                      width="450px"
-                      height="200px"
-                    />
-                    <Button onClick={() => handleReplaceVideo(index)}>
-                      Replace Video
-                    </Button>
-                    <Button
-                      onClick={() => handleDeleteLecture(index)}
-                      className="bg-red-900"
-                    >
-                      Delete Lecture
-                    </Button>
-                  </div>
-                ) : (
-                  <Input
-                    type="file"
-                    accept="video/*"
-                    onChange={(event) =>
-                      handleSingleLectureUpload(event, index)
-                    }
-                    className="mb-4"
-                  />
-                )}
+          <div className="flex flex-wrap gap-4 items-center mb-4">
+            <h3 className="font-bold text-lg text-indigo-300">
+              Lecture {index + 1}
+            </h3>
+            <Input
+              name={`title-${index + 1}`}
+              placeholder="Enter lecture title"
+              className="flex-1 max-w-md bg-white/10 border-white/10 text-white"
+              onChange={(event) => handleCourseTitleChange(event, index)}
+              value={courseCurriculumFormData[index]?.title}
+            />
+            <div className="flex items-center space-x-2">
+              <Switch
+                onCheckedChange={(value) =>
+                  handleFreePreviewChange(value, index)
+                }
+                checked={courseCurriculumFormData[index]?.freePreview}
+                id={`freePreview-${index + 1}`}
+              />
+              <Label
+                htmlFor={`freePreview-${index + 1}`}
+                className="text-white/80"
+              >
+                Free Preview
+              </Label>
+            </div>
+          </div>
+
+          {courseCurriculumFormData[index]?.videoUrl ? (
+            <div className="flex flex-col md:flex-row gap-4 items-start">
+              <VideoPlayer
+                url={courseCurriculumFormData[index]?.videoUrl}
+                width="450px"
+                height="200px"
+              />
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={() => handleReplaceVideo(index)}
+                  className="bg-yellow-600 hover:bg-yellow-700 text-white"
+                >
+                  Replace Video
+                </Button>
+                <Button
+                  onClick={() => handleDeleteLecture(index)}
+                  className="bg-red-700 hover:bg-red-800 text-white"
+                >
+                  Delete Lecture
+                </Button>
               </div>
             </div>
-          ))}
+          ) : (
+            <Input
+              type="file"
+              accept="video/*"
+              onChange={(event) =>
+                handleSingleLectureUpload(event, index)
+              }
+              className="bg-white/10 border-white/10 text-white"
+            />
+          )}
         </div>
-      </CardContent>
-    </Card>
+      ))}
+    </div>
+  </CardContent>
+</Card>
+
   );
 }
 

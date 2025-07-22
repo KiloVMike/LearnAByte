@@ -26,9 +26,11 @@ function InstructorCourses({ listOfCourses }) {
   } = useContext(InstructorContext);
 
   return (
-    <Card>
-      <CardHeader className="flex justify-between flex-row items-center">
-        <CardTitle className="text-3xl font-extrabold">All Courses</CardTitle>
+    <Card className="bg-white/5 text-white border border-white/10 backdrop-blur-sm shadow-md">
+      <CardHeader className="flex justify-between items-center">
+        <CardTitle className="text-2xl font-semibold text-white">
+          All Courses
+        </CardTitle>
         <Button
           onClick={() => {
             setCurrentEditedCourseId(null);
@@ -36,52 +38,60 @@ function InstructorCourses({ listOfCourses }) {
             setCourseCurriculumFormData(courseCurriculumInitialFormData);
             navigate("/instructor/create-new-course");
           }}
-          className="p-6"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-6"
         >
           Create New Course
         </Button>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Course</TableHead>
-                <TableHead>Students</TableHead>
-                <TableHead>Revenue</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {listOfCourses && listOfCourses.length > 0
-                ? listOfCourses.map((course) => (
-                    <TableRow>
-                      <TableCell className="font-medium">
-                        {course?.title}
-                      </TableCell>
-                      <TableCell>{course?.students?.length}</TableCell>
-                      <TableCell>
-                        ${course?.students?.length * course?.pricing}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          onClick={() => {
-                            navigate(`/instructor/edit-course/${course?._id}`);
-                          }}
-                          variant="ghost"
-                          size="sm"
-                        >
-                          <Edit className="h-6 w-6" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Delete className="h-6 w-6" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
+          {listOfCourses?.length > 0 ? (
+            <Table className="w-full text-white">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-white/80">Course</TableHead>
+                  <TableHead className="text-white/80">Students</TableHead>
+                  <TableHead className="text-white/80">Revenue</TableHead>
+                  <TableHead className="text-white/80 text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {listOfCourses.map((course, index) => (
+                  <TableRow
+                    key={course._id || index}
+                    className="hover:bg-white/10 transition-all duration-200"
+                  >
+                    <TableCell className="font-medium">{course?.title}</TableCell>
+                    <TableCell>{course?.students?.length || 0}</TableCell>
+                    <TableCell>
+                      ₹{(course?.students?.length || 0) * course?.pricing}
+                    </TableCell>
+                    <TableCell className="text-right space-x-2">
+                      <Button
+                        onClick={() =>
+                          navigate(`/instructor/edit-course/${course?._id}`)
+                        }
+                        variant="ghost"
+                        size="icon"
+                        className="text-indigo-400 hover:text-indigo-600"
+                      >
+                        <Edit className="h-5 w-5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-400 hover:text-red-600"
+                      >
+                        <Delete className="h-5 w-5" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <p className="text-sm text-gray-300">No courses created yet.</p>
+          )}
         </div>
       </CardContent>
     </Card>

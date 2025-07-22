@@ -43,33 +43,42 @@ function CourseSettings() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Course Settings</CardTitle>
-      </CardHeader>
-      <div className="p-4">
-        {mediaUploadProgress ? (
-          <MediaProgressbar
-            isMediaUploading={mediaUploadProgress}
-            progress={mediaUploadProgressPercentage}
-          />
-        ) : null}
+    <Card className="bg-white/5 border border-white/10 backdrop-blur-md shadow-md text-white">
+  <CardHeader>
+    <CardTitle className="text-xl font-semibold text-indigo-300">
+      Course Settings
+    </CardTitle>
+  </CardHeader>
+
+  <div className="p-4">
+    {mediaUploadProgress && (
+      <MediaProgressbar
+        isMediaUploading={mediaUploadProgress}
+        progress={mediaUploadProgressPercentage}
+      />
+    )}
+  </div>
+
+  <CardContent>
+    {courseLandingFormData?.image ? (
+      <img
+        src={courseLandingFormData.image}
+        alt="Course Cover"
+        className="rounded-md border border-white/10 shadow-md max-w-full h-auto"
+      />
+    ) : (
+      <div className="flex flex-col gap-3 text-white">
+        <Label className="text-sm text-gray-300">Upload Course Image</Label>
+        <Input
+          onChange={handleImageUploadChange}
+          type="file"
+          accept="image/*"
+          className="bg-white/10 text-white border border-white/20 file:text-white file:bg-indigo-600 file:border-0 file:rounded-sm file:px-3 file:py-1"
+        />
       </div>
-      <CardContent>
-        {courseLandingFormData?.image ? (
-          <img src={courseLandingFormData.image} />
-        ) : (
-          <div className="flex flex-col gap-3">
-            <Label>Upload Course Image</Label>
-            <Input
-              onChange={handleImageUploadChange}
-              type="file"
-              accept="image/*"
-            />
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    )}
+  </CardContent>
+</Card>
   );
 }
 
