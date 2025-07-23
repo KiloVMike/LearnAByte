@@ -79,7 +79,7 @@ return (
       <h2 className="text-4xl font-bold text-center mb-14 text-white tracking-tight">
         ✨ Explore Categories
       </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
         {courseCategories.map((categoryItem) => (
           <div
             key={categoryItem.id}

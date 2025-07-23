@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useContext } from "react";
 import { AuthContext } from "@/context/auth-context";
-import logo from "../../assets/Untitleddddd design.png"
+import logo from "../../assets/ssssssss-removebg-preview.png"
 
 function StudentViewCommonHeader() {
   const navigate = useNavigate();
@@ -26,12 +26,12 @@ return (
       {/* Left: Logo */}
 <Link
   to="/home"
-  className="inline-block hover:scale-[1.03] transition-transform duration-300"
+  className="  duration-300"
 >
   <img
     src={logo}
     alt="LMS Learn"
-    className="h-20 w-52  rounded-md shadow-lg  "
+    className="h-20 w-52  rounded-md "
   />
 </Link>
 
