@@ -89,13 +89,13 @@ async function handleCreatePayment() {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Use your env var
       amount: amount.toString(),
       currency,
-      name: "Readiculous",
+      name: "LearnAByte",
       description: "Course Purchase",
       image: "/logo.svg", // Optional logo
       order_id: razorpayOrderId,
       handler: async function (res) {
         // After payment success
-        const captureResponse = await fetch("/api/student/order/capture", {
+        const captureResponse = await fetch("/student/order/capture", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -131,6 +131,8 @@ async function handleCreatePayment() {
     alert("Something went wrong while initiating payment.");
   }
 }
+
+
 
 
   useEffect(() => {

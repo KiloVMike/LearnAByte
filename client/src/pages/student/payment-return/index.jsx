@@ -9,18 +9,18 @@ function RazorpayPaymentReturnPage() {
 
   const razorpayPaymentId = params.get("razorpay_payment_id");
   const razorpayOrderId = params.get("razorpay_order_id");
-  const razorpaySignature = params.get("razorpay_signature");
+  const razorpaySignature = params.get("razorpay_signature"); // Optional for now
 
   useEffect(() => {
-    if (razorpayPaymentId && razorpayOrderId && razorpaySignature) {
+    if (razorpayPaymentId && razorpayOrderId) {
       async function capturePayment() {
         const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
-        const response = await captureAndFinalizePaymentService({
+        const response = await captureAndFinalizePaymentService(
           razorpayPaymentId,
           razorpayOrderId,
-          orderId,
-        });
+          orderId
+        );
 
         if (response?.success) {
           sessionStorage.removeItem("currentOrderId");
