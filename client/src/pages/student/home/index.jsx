@@ -49,7 +49,7 @@ return (
     <section className="relative px-6 lg:px-16 py-24 flex flex-col-reverse lg:flex-row items-center justify-between gap-16">
       <div className="lg:w space-y-8 text-center lg:text-left animate-fade-in-up">
         <h1 className="text-7xl md:text-6xl font-extrabold leading-tight">
-          Transform the Way You <span className="text-indigo-400">Learn</span>
+          Transform  <span className="text-indigo-400">the Way You Learn</span>
         </h1>
         <p className="text-3xl text-gray-300 max-w-lg mx-auto lg:mx-0">
           Handpicked premium courses taught by world-class instructors. Unlock your potential today.

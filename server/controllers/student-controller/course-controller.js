@@ -51,6 +51,15 @@ const getAllStudentViewCourses = async (req, res) => {
 const getStudentViewCourseDetails = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!id || id === "undefined") {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid course ID",
+        data: null,
+      });
+    }
+
     const courseDetails = await Course.findById(id);
 
     if (!courseDetails) {

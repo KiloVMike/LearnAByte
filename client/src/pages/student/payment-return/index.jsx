@@ -3,22 +3,24 @@ import { captureAndFinalizePaymentService } from "@/services";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-function PaypalPaymentReturnPage() {
+function RazorpayPaymentReturnPage() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paymentId = params.get("paymentId");
-  const payerId = params.get("PayerID");
+
+  const razorpayPaymentId = params.get("razorpay_payment_id");
+  const razorpayOrderId = params.get("razorpay_order_id");
+  const razorpaySignature = params.get("razorpay_signature");
 
   useEffect(() => {
-    if (paymentId && payerId) {
+    if (razorpayPaymentId && razorpayOrderId && razorpaySignature) {
       async function capturePayment() {
         const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
 
-        const response = await captureAndFinalizePaymentService(
-          paymentId,
-          payerId,
-          orderId
-        );
+        const response = await captureAndFinalizePaymentService({
+          razorpayPaymentId,
+          razorpayOrderId,
+          orderId,
+        });
 
         if (response?.success) {
           sessionStorage.removeItem("currentOrderId");
@@ -28,7 +30,7 @@ function PaypalPaymentReturnPage() {
 
       capturePayment();
     }
-  }, [payerId, paymentId]);
+  }, [razorpayPaymentId, razorpayOrderId, razorpaySignature]);
 
   return (
     <Card>
@@ -39,4 +41,4 @@ function PaypalPaymentReturnPage() {
   );
 }
 
-export default PaypalPaymentReturnPage;
+export default RazorpayPaymentReturnPage;
