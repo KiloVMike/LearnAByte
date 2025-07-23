@@ -95,7 +95,7 @@ async function handleCreatePayment() {
       order_id: razorpayOrderId,
       handler: async function (res) {
         // After payment success
-        const captureResponse = await fetch("/student/order/capture", {
+        const captureResponse = await fetch("http://localhost:5000/student/order/capture", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
